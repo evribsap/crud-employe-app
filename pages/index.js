@@ -1,4 +1,6 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { BiUserPlus } from 'react-icons/bi';
+import Table from './components/table';
 
 export default function Home() {
   return (
@@ -10,9 +12,28 @@ export default function Home() {
       </Head>
 
       <main>
-        <h1 className='text-xl md:'>
+        <h1 className='text-xl md:text-5xl text-center font-bold py-10'>
           Employee Management
         </h1>
+
+        <div className='container mx-auto flex justify-between py-5 border-b'>
+          <div className='left flex gap-3'>
+            <button className='flex bg-indigo-500 text-white px-3 py-3 border rounded-md hover:bg-gray-50 hover:border-indigo-500 hover:text-gray-800'>
+              Add Employee
+              <span className='pl-2'><BiUserPlus size={23} /></span> 
+            </button>
+          </div>
+
+          {/* collapsable form */}
+
+          
+
+        </div>
+
+        {/* Table */}
+        <div className='container mx-auto'>
+          <Table />
+        </div>
       </main>
     </section>
   )
