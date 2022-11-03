@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { BiUserPlus } from 'react-icons/bi';
+import Form from './components/form';
 import Table from './components/table';
 
 export default function Home() {
@@ -23,11 +24,11 @@ export default function Home() {
               <span className='pl-2'><BiUserPlus size={23} /></span> 
             </button>
           </div>
+        </div>
 
-          {/* collapsable form */}
-
-          
-
+        {/* collapsable form */}
+        <div className='container mx-auto py-5'>
+          <Form />
         </div>
 
         {/* Table */}
