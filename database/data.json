@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Johne Di",
+        "avatar": " ",
+        "email": "johnedi@gmail.com",
+        "salary": "30000",
+        "date": "2022-06-08",
+        "status": "Active"
+    },
+    {
+        "id": 2,
+        "name": "Johne Di",
+        "avatar": " ",
+        "email": "johnedi@gmail.com",
+        "salary": "30000",
+        "date": "2022-06-08",
+        "status": "Active"
+    },
+    {
+        "id": 3,
+        "name": "Johne Di",
+        "avatar": " ",
+        "email": "johnedi@gmail.com",
+        "salary": "30000",
+        "date": "2022-06-08",
+        "status": "Active"
+    },
+    {
+        "id": 4,
+        "name": "Johne Di",
+        "avatar": " ",
+        "email": "johnedi@gmail.com",
+        "salary": "30000",
+        "date": "2022-06-08",
+        "status": "Active"
+    }
+]

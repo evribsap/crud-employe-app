@@ -1,3 +1,4 @@
+import data from '/database/data.json';
 import { BiEdit, BiTrashAlt} from 'react-icons/bi';
 
 export default function Table () {
@@ -38,23 +39,33 @@ export default function Table () {
                 </tr>
             </thead>
             <tbody className="bg-gray-200">
-                <tr className="bg-gray-50 text-center">
+                {
+                    data.map((obj, i) => <Tr  {...obj} key={i}/>)
+                }
+            </tbody>
+        </table>
+    )
+}
+
+function Tr({ id, name, avatar, email, salary, date, status }) {
+    return (
+        <tr className="bg-gray-50 text-center">
                     <td className="px-16 py-2 flex flex-row items-center">
-                        <img src="#" alt="image"/>
-                        <span className="text-center ml-2 font-semibold">John Doe</span>
+                        <img src={avatar || '#'} alt="image"/>
+                        <span className="text-center ml-2 font-semibold">{name || "Unknown"}</span>
                     </td>
                     <td className="px-16 py-2">
-                        <span>johndoe@gmail.com</span>
+                        <span>{email || "Unknown"}</span>
                     </td>
                     <td className="px-16 py-2">
-                        <span>$100000</span>
+                        <span>${salary || " "}</span>
                     </td>
                     <td className="px-16 py-2">
-                        <span>10-10-1980</span>
+                        <span>{date || "Unknown"}</span>
                     </td>
                     <td className="px-16 py-2">
                         <button className="cursor">
-                            <span className="bg-green-500 text-white px-2 py-1 rounded-full">Active</span>
+                            <span className="bg-green-500 text-white px-2 py-1 rounded-full">{status || "Unknown"}</span>
                         </button>
                     </td>
                     <td className="px-16 py-2 flex justify-around gap-5">
@@ -66,7 +77,5 @@ export default function Table () {
                         </button>
                     </td>
                 </tr>
-            </tbody>
-        </table>
     )
 }
