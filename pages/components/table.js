@@ -47,35 +47,34 @@ export default function Table () {
     )
 }
 
-function Tr({ id, name, avatar, email, salary, date, status }) {
+function Tr({ id, name, email, salary, date, status }) {
     return (
         <tr className="bg-gray-50 text-center">
-                    <td className="px-16 py-2 flex flex-row items-center">
-                        <img src={avatar || '#'} alt="image"/>
-                        <span className="text-center ml-2 font-semibold">{name || "Unknown"}</span>
-                    </td>
-                    <td className="px-16 py-2">
-                        <span>{email || "Unknown"}</span>
-                    </td>
-                    <td className="px-16 py-2">
-                        <span>${salary || " "}</span>
-                    </td>
-                    <td className="px-16 py-2">
-                        <span>{date || "Unknown"}</span>
-                    </td>
-                    <td className="px-16 py-2">
-                        <button className="cursor">
-                            <span className="bg-green-500 text-white px-2 py-1 rounded-full">{status || "Unknown"}</span>
-                        </button>
-                    </td>
-                    <td className="px-16 py-2 flex justify-around gap-5">
-                        <button className="cursor">
+            <td className="px-16 py-2 flex flex-row items-center">
+                <span className="text-center ml-2 font-semibold">{name || "Unknown"}</span>
+            </td>
+            <td className="px-16 py-2">
+                <span>{email || "Unknown"}</span>
+            </td>
+            <td className="px-16 py-2">
+                <span>${salary || " "}</span>
+            </td>
+            <td className="px-16 py-2">
+                <span>{date || "Unknown"}</span>
+            </td>
+            <td className="px-16 py-2">
+                <button className="cursor">
+                    <span className="bg-green-500 text-white px-2 py-1 rounded-full">{status || "Unknown"}</span>
+                </button>
+            </td>
+            <td className="px-16 py-2 flex justify-around gap-5">
+                <button className="cursor">
                             <BiEdit size={25}/>
-                        </button>
-                        <button className="cursor">
-                            <BiTrashAlt size={25}/>
-                        </button>
-                    </td>
-                </tr>
+                </button>
+                <button className="cursor">
+                    <BiTrashAlt size={25}/>
+                </button>
+            </td>
+        </tr>
     )
 }
