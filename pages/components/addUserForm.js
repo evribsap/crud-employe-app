@@ -1,17 +1,21 @@
-import { useReducer } from "react";
 import { BiPlus } from "react-icons/bi";
-import Success from "./success";
+import SuccessMessage from "./success";
+import ErrorMessage from "./error";
 
-const formReducer = (state, event ) => {
-    return {
-        ...state,
-        [event.target.name]:event.target.value
-    }
-}
+import { useQueryClient, useMutation } from 'react-query';
+import { addUser, getUsers } from "../../lib/helper";
 
-export default function AddUserForm() {
 
-    const [formData, setFormData ] = useReducer(formReducer, {});
+
+export default function AddUserForm({formData, setFormData}) {
+
+    const queryClient = useQueryClient();
+
+    const addMutation = useMutation(addUser, {
+        onSuccess: () => {
+            queryClient.prefetchQuery('users', getUsers)
+        }
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -19,23 +23,47 @@ export default function AddUserForm() {
             return (
                 console.log("Form Data is empty")
             )
-            console.log(formData)
         }
+        let { firstName, lastName, email, salary, date, status } = formData;
+
+        const model = {
+            name: `${firstName} ${lastName}`,
+            email,
+            salary,
+            date,
+            status : status ?? "Active",
+        }
+
+        addMutation.mutate(model)
     };
 
-    if (Object.keys(formData).length > 0 ) {
+    if(addMutation.isLoading) {
+        return(
+            <div>
+                Loading!
+            </div>
+        )
+    }
+
+    if(addMutation.isSuccess) {
         return (
-            <Success message={"Data Added"} />
+            <SuccessMessage message={"Data Added"} />
+        )
+    }
+
+    if(addMutation.isError) {
+        return (
+            <ErrorMessage message={"Error"} />
         )
     }
 
     return (
         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 w-5/6 gap-4">
             <div className="input-type">
-                <input onChange={setFormData} type="text" name="firstname" placeholder="First Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
+                <input onChange={setFormData} type="text" name="firstName" placeholder="First Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
             </div>
             <div className="input-type">
-                <input onChange={setFormData} type="text" name="lastname" placeholder="Last Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
+                <input onChange={setFormData} type="text" name="lastName" placeholder="Last Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
             </div>
             <div className="input-type">
                 <input onChange={setFormData} type="text" name="email" placeholder="Email" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
