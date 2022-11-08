@@ -1,19 +1,37 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import { BiUserPlus } from 'react-icons/bi';
+import { BiCheck, BiUserPlus, BiX } from 'react-icons/bi';
 import Form from './components/form';
 import Table from './components/table';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleChangeAction } from '../redux/reducer';
+import { deleteAction, toggleChangeAction } from '../redux/reducer';
+import { deleteUser, getUsers } from '../lib/helper';
+import { useQueryClient } from 'react-query';
 
 export default function Home() {
 
   const visible= useSelector((state) => state.app.client.toggleForm);
+  const deleteId= useSelector((state) => state.app.client.deleteId);
+  const queryClient = useQueryClient();
+
 
   const dispatch = useDispatch();
 
   const handleVisible = () => {
     dispatch(toggleChangeAction())
+  }
+
+  const deleteHandler = async () => {
+    if (deleteId) {
+      await deleteUser(deleteId);
+      await queryClient.prefetchQuery('users', getUsers);
+      await dispatch(deleteAction(null));
+    }
+  }
+
+  const cancelHandler = async () => {
+    console.log("Cancel")
+    await dispatch(deleteAction(null));
   }
 
   return (
@@ -36,6 +54,7 @@ export default function Home() {
               <span className='pl-2'><BiUserPlus size={23} /></span> 
             </button>
           </div>
+          { deleteId ? DeleteComponent({ deleteHandler, cancelHandler}) : <></> }
         </div>
 
         {/* collapsable form */}
@@ -47,5 +66,19 @@ export default function Home() {
         </div>
       </main>
     </section>
+  )
+}
+
+function DeleteComponent({deleteHandler, cancelHandler}) {
+  return (
+    <div className='flex gap-5 items-center'>
+      <p>Are you sure?</p>
+      <button onClick={deleteHandler} className='flex bg-red-500 text-white px-4 py-2 border rounded-md hover:bg-rose-500 hover:border-red-500 hover:text-gray-50'>
+        Yes <span className='pl-1'><BiX size={25}/></span>
+      </button>
+      <button onClick={cancelHandler} className='flex bg-green-500 text-white px-4 py-2 border rounded-md hover:bg-green-500 hover:border-green-500 hover:text-gray-50'>
+        No <span className='pl-1'><BiCheck size={25}/></span>
+      </button>
+    </div>
   )
 }
