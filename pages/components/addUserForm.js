@@ -24,10 +24,10 @@ export default function AddUserForm({formData, setFormData}) {
                 console.log("Form Data is empty")
             )
         }
-        let { firstName, lastName, email, salary, date, status } = formData;
+        let { firstname, lastname, email, salary, date, status } = formData;
 
         const model = {
-            name: `${firstName} ${lastName}`,
+            name: `${firstname} ${lastname}`,
             email,
             salary,
             date,
@@ -60,10 +60,10 @@ export default function AddUserForm({formData, setFormData}) {
     return (
         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 w-5/6 gap-4">
             <div className="input-type">
-                <input onChange={setFormData} type="text" name="firstName" placeholder="First Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
+                <input onChange={setFormData} type="text" name="firstname" placeholder="First Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
             </div>
             <div className="input-type">
-                <input onChange={setFormData} type="text" name="lastName" placeholder="Last Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
+                <input onChange={setFormData} type="text" name="lastname" placeholder="Last Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
             </div>
             <div className="input-type">
                 <input onChange={setFormData} type="text" name="email" placeholder="Email" className="border w-full px-5 py-3 focus:outline-none rounded-md" />

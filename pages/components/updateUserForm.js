@@ -12,22 +12,9 @@ export default function UpdateUserForm({formId, formData, setFormData }) {
     const UpdateMutation = useMutation((newData) => updateUser(formId, newData), {
         onSuccess:async(data) => {
             //queryClient.setQueryData('users', (old) => [data])
-            queryClient.setQueryData('users', getUsers)
+            queryClient.prefetchQuery('users', getUsers)
         }
     });
-    
-
-    const { name, email, salary, date, status } = data;
-
-    const [firstName, lastName] = name ? name.split('') : formData
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        let userName=`${formData.firstName ?? firstName} ${formData.lastName ?? lastName}`
-        let updated = Object.assign({}, data, formData, {name: userName})
-
-        await UpdateMutation.mutate(updated)
-    }
 
     if (isLoading) {
         return (
@@ -44,14 +31,27 @@ export default function UpdateUserForm({formId, formData, setFormData }) {
             </div>
         )
     }
+    
+
+    const { name, email, salary, date, status } = data;
+
+    const [firstname, lastname] = name ? name.split(' ') : formData;
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        let userName=`${formData.firstname ?? firstname} ${formData.lastname ?? lastname}`
+        let updated = Object.assign({}, data, formData, {name: userName})
+
+        await UpdateMutation.mutate(updated)
+    }
 
     return (
         <form onSubmit={handleSubmit} className="grid md:grid-cols-2 w-5/6 gap-4">
             <div className="input-type">
-                <input onChange={setFormData} defaultValue={firstName} type="text" name="firstName" placeholder="First Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
+                <input onChange={setFormData} defaultValue={firstname} type="text" name="firstname" placeholder="First Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
             </div>
             <div className="input-type">
-                <input onChange={setFormData} defaultValue={lastName} type="text" name="lastName" placeholder="Last Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
+                <input onChange={setFormData} defaultValue={lastname} type="text" name="lastname" placeholder="Last Name" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
             </div>
             <div className="input-type">
                 <input onChange={setFormData} defaultValue={email} type="text" name="email" placeholder="Email" className="border w-full px-5 py-3 focus:outline-none rounded-md" />
